@@ -14,7 +14,9 @@ import (
 type proxy struct{}
 
 func (p *proxy) ServeGopher(w gopher.ResponseWriter, r *gopher.Request) {
+	log.Infof("Selector: %s", r.Selector)
 	url := strings.TrimPrefix(r.Selector, "/")
+	url = fmt.Sprintf("https://%s", url)
 
 	res, err := http.Get(url)
 	if err != nil {
